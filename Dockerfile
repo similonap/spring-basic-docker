@@ -1,6 +1,6 @@
 # Stage 1: Build the application with Maven
 FROM maven:3.8.4-openjdk-17 AS build
-
+EXPOSE 8080
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -25,7 +25,6 @@ WORKDIR /app
 # Copy the built .jar file from the previous stage
 COPY --from=build /app/target/*.jar app.jar
 
-EXPOSE 8080
 
 # Specify the entry point for the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

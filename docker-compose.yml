@@ -2,5 +2,17 @@ version: '3.8'
 services:
   app:
     build: .
+    networks:
+      - proxy
     ports:
       - "8080:8080"
+    labels:
+      - "traefik.http.routers.my-app.rule=Host(`sw11-1.devops-ap.be`)"
+      - "traefik.http.services.my-app-service.loadbalancer.server.port=8080"
+      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.http.routers.my-app.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
+networks:
+  proxy:
+    external: true
+    name: traefik
